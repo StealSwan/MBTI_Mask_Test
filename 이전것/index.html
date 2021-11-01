@@ -9,31 +9,43 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="container">
+
+    <!--시작화면-->
     <article class="start">
         <h1 class="mt-5 text-center">가면 무도회에 어서오세요</h1>
         <button type="button" class="btn btn-outline-primary mt-5" onclick='start();'>시간여행 시작하기</button>
     </article>
+
+
+    <!--문제화면-->
     <article class="question">
         <div class="progress mt-5">
             <div class="progress-bar bg-warning" role="progressbar" style="width: calc(100/12*1%)" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
         <h2 id="title" class="text-center mt-5">문제</h2>
         <input id="type" type="hidden" value="EI">
+        <!--버튼을 누를 경우, 해당 타입에 대한 점수 저장-->
         <button id="A" type="button" class="btn btn-primary mt-5">Primary</button>
         <button id="B" type="button" class="btn btn-primary mt-5">Primary</button>   
     </article>
 
+
+    <!--결과화면-->
     <article class="result">
-        <img id="img" class="rounded-circle" mt-5 src="chandelier.png" alt="background">
-        <h2 id="mask" class="text-center" mt-5> 당신에게 어울리는 가면은...</h2>
-        <h3 id="explain" class="text-center" mt-5> 설명</h3>
+        <img id="img" class="rounded-circle mt-5" src="chandelier.png" alt="background">
+        <h2 id="mask" class="text-center mt-5"> 당신에게 어울리는 가면은...</h2>
+        <h3 id="explain" class="text-center mt-5"> 설명</h3>
     </article>
 
+
+    <!--타입별 점수 저장, 내부적으로 정보저장 할때는 hidden input 태그 사용-->
     <input type="hidden" id="EI" value="0">
     <input type="hidden" id="SN" value="0">
     <input type="hidden" id="TF" value="0">
     <input type="hidden" id="JP" value="0">
 
+
+    <!--문제와 결과 정보들-->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script>    //화면 넘어가고 동적인 처리
@@ -53,24 +65,59 @@
             12:{"title": "문제 12번", "type":"JP", "A":"J", "B":"P"}
         }
 
+        //결과들
         var result = {
-            "ISTJ" : {"mask" : ""}
+            "ISTJ" : {"mask" : "가면라이더", "explain" : "가면라이더 설명", "img" : "가면라이더.png"},
+            "ISTF" : {"mask" : "깃털 가면", "explain" : "깃털 가면 설명", "img" : "깃털 가면.png"},
+            "INFJ" : {"mask" : "거울", "explain" : "거울 설명", "img" : "거울.png"},
+            "INTJ" : {"mask" : "흑사병 가면", "explain" : "흑사병 가면 설명", "img" : "흑사병 가면.jpg"},
+            "ISTP" : {"mask" : "부엉이 가면", "explain" : "부엉이 가면 설명", "img" : "부엉이 가면2.png"},
+            "ISFP" : {"mask" : "콧수염 가면", "explain" : "콧수염 가면 설명", "img" : "콧수염 가면.png"},
+            "INFP" : {"mask" : "배트맨 가면", "explain" : "배트맨 가면 설명", "img" : "배트맨 가면.png"},
+            "INTP" : {"mask" : "아이언맨 가면", "explain" : "아이언맨 가면 설명", "img" : "아이언맨 가면.png"},
+            "ESTP" : {"mask" : "동물 가면", "explain" : "동물 가면 설명", "img" : "동물가면.jpg"},
+            "ESFP" : {"mask" : "하회탈", "explain" : "하회탈 설명", "img" : "하회탈.jpg"},
+            "ENFP" : {"mask" : "인형탈", "explain" : "인형탈 설명", "img" : "인형탈.png"},
+            "ENTP" : {"mask" : "우주복", "explain" : "우주복 설명", "img" : "우주복.png"},
+            "ESTJ" : {"mask" : "헬멧", "explain" : "헬멧 설명", "img" : "헬멧.png"},
+            "ESFJ" : {"mask" : "붕대", "explain" : "붕대 설명", "img" : "붕대.png"},
+            "ENFJ" : {"mask" : "방독면", "explain" : "방독면 설명", "img" : "방독면.png"},
+            "ENTJ" : {"mask" : "브이포벤데타", "explain" : "브이포벤데타 설명", "img" : "브이포벤데타.png"}
         }
 
+
+        //start함수 - 시작 버튼 누르면 동작하는 함수
+        //시작 버튼을 hide
+        //question 화면을 보여줌
+        //next함수로 다음 문제 출력
         function start(){
             $(".start").hide(); //위에 start 아티클 전체를 감싸는 부모 태그 선택 + 숨김
             $(".question").show();
             next();
         }
+
+
+        //A와 B 버튼의 클릭 이벤트
+        //A클릭 시 타입 정보를 가져와서 타입의 값에서 1을 올려주고 다음 문제로 넘어감
         $("#A").click(function(){   //클릭 인자값은 함수가 들어감
             var type = $("#type").val(); //#은 ID선택을 의미
             var preValue = $("#"+type).val();
             $("#"+type).val(parseInt(preValue)+1);
             next();
         });
+
+        //B 클릭시 앞에 점수만 올리기로만 했기에 다음으로 넘어감
         $("#B").click(function(){   //클릭 인자값은 함수가 들어감
             next(); //점수증가 필요없다
         });
+
+
+        //다음 문제로 넘어가는 next 함수는 마지막 문제와 마지막 문제가 아닐때로 나눔
+        //num이 13이 돼서 마지막 문제에서 대답을 클릭하면 질문화면 숨기고, 결과화면 보여주게 만듦
+        //mbti를 구하는 핵심로직을 구현
+        //if else 구문을 삼항 연산자로 간단히 표현
+        //그렇게 완성된 mbti를 이용해서 result 라는 자바 스크립트 오브젝트에서 mbti를 키로
+        // 해당하는 동물의 이미지, 동물, 설명을 가져와서 결과 화면에 넣어주는 것까지 구현
         function next(){
             if (num==13) {
                 $(".question").hide();
@@ -80,8 +127,17 @@
                 ($("#SN").val() < 2) ? mbti += "N" : mbti += "S";
                 ($("#TF").val() < 2) ? mbti += "F" : mbti += "T";
                 ($("#JP").val() < 2) ? mbti += "P" : mbti += "J";
-                alert(mbti);
-            } else{
+                
+                $("#img").attr("src",result[mbti]["img"]);
+                $("#mask").html(result[mbti]["mask"]);
+                $("#explain").html(result[mbti]["explain"]);
+            }
+
+
+            //마지막 문제가 아닐때는 프로그래스바의 .attr을 사용해 style 속성중 width값 선택해 변경 
+            //title, type, A, B에 해당하는 정보는 q 라는 자바스크립트 오브젝트에서 문제 번호를 키로 문제 정보를 가지고 옴
+            //다음 문제 넘어가면 num 1 증가해 다음 문제로 감
+            else{
                 $(".progress-bar").attr('style','width: calc(100/12*'+num+'%)');
                 $("#title").html(q[num]["title"]);
                 $("#type").val(q[num]["type"]);
