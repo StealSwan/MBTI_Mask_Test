@@ -1,21 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- ��Ʈ��Ʈ���� css���� ���� �־�� css�� ����� �� -->
+    <!-- 부트스트랩이 css보다 위에 있어야 css에 덮어쓰게 됨 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<!-- container는 본래 부트스트랩에서 그리드를 만들때 사용 -->
+<body class="container">
 
-    MBTI
-       
+    <!-- article은 해당 사이트와는 완전 독립적으로 구성되는 요소를 정의할 때 사용 -->
+    <article class="start">
+        <!-- mt는 margin을 의미 & 부트스트랩 클래스를 통해 가운데 배치도 가능 -->
+        <h1 class="mt-5 text-center">MBTI 가면 무도회에 어서오세요!</h1>
 
-    <!-- �ڹ� ��ũ��Ʈ ��Ʈ��Ʈ�� �ڵ� -->
+        <!-- 시작 버튼 클릭시 jquert로 현페이지가 사라지고 새로운 페이지 등장하도록 만들기 -->
+        <button type="button" class="btn btn-primary mt-5" onclick="start()">테스트 시작하기</button>   
+    </article>  
+
+
+    <!-- 문제구성 -->
+    <article class="question">
+
+        <!-- 프로그래스바 -->
+        <div class="progress mt-5">
+            <!-- 자동계산 calc -->
+            <div class="progress-bar" role="progressbar" style="width: calc(100/12*1%)"></div>
+        </div>
+        
+        <!-- 문제 정답 선택 버튼 위아래로 -->
+        <h2 id="title" class="text-center mt-5">문제</h2>
+        <!-- id값에 따라 각 타입에 해당하는 점수 상승  -->
+        <input id="type" type="hidden" value="EI">
+        <button id="A" type="button" class="btn btn-primary mt-5">1번</button>
+        <button id="B" type="button" class="btn btn-primary mt-5">2번</button>
+
+    </article>
+
+
+    <!-- 결과 화면 -->
+    <article class="result">
+        <img id="img" class="rounded-circle mt-5" src="ex1.png" alt="">
+        <h2 id="animal" class="text-center mt-5">동물이름</h2>
+        <h2 id="explain" class="text-center mt-5">설명</h2>
+    </article>
+
+
+    <!-- 점수를 저장하는 곳 - value -->
+     <input type="hidden" id="EI" value="0">
+     <input type="hidden" id="SN" value="0">
+     <input type="hidden" id="TF" value="0">
+     <input type="hidden" id="JP" value="0">
+
+
+    <!-- 자바 스크립트 부트스트랩 코드 & 부트스트랩 jquery 코드 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <script>
+        //현재 몇번 문제에 있는지 변수로 설정
+        var num = 1;
+
+        //문제 정보 KEY-VALUE 형태로 저장
+        //문제이름 + 타입정보 + 각 선택지 영향 타입요소
+        var q= {
+            1:{"title":"문제 1번", "type":"EI", "A":"E", "B":"I"},
+            2:{"title":"문제 2번", "type":"EI", "A":"E", "B":"I"},
+            3:{"title":"문제 3번", "type":"EI", "A":"E", "B":"I"},
+            4:{"title":"문제 4번", "type":"SN", "A":"S", "B":"N"},
+            5:{"title":"문제 5번", "type":"SN", "A":"S", "B":"N"},
+            6:{"title":"문제 6번", "type":"SN", "A":"S", "B":"N"},
+            7:{"title":"문제 7번", "type":"TF", "A":"T", "B":"F"},
+            8:{"title":"문제 8번", "type":"TF", "A":"T", "B":"F"},
+            9:{"title":"문제 9번", "type":"TF", "A":"T", "B":"F"},
+            10:{"title":"문제 10번", "type":"JP", "A":"J", "B":"P"},
+            11:{"title":"문제 11번", "type":"JP", "A":"J", "B":"P"},
+            12:{"title":"문제 12번", "type":"JP", "A":"J", "B":"P"},
+        }
+
+
+        //MBTI 결과를 키로 하는 정보 저장
+        var result = {
+            //속성을 추가하고 싶으면 더 추가해도 됨
+            "ISTJ": {"animal": "하마", "explain": "하마 설명", "img": "ex1.png"},
+            "ISFJ": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "INFJ": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "INTJ": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "ISTP": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "ISFP": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "INFP": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "INTP": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            
+            "ESTP": {"animal": "멋쟁이사자", "explain": "멋쟁이사자 설명", "img": "ex1.png"},
+            "ESFP": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "ENFP": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "ENTP": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "ESTJ": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "ESFJ": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "ENFJ": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+            "ENTJ": {"animal": "호랑이", "explain": "호랑이 설명", "img": "ex1.png"},
+        }
+
+
+        //시작버튼 누르면 초기화면 사라지고, 문제는 보이게
+        function start(){
+            $(".start").hide();
+            $(".question").show();
+
+            //시작버튼 누를 경우, 시작화면 숨기고 문제화면 보여주며 첫번째 문제
+            next();
+        }
+
+
+        //각 버튼 클릭시 점수상승 함수 - id가 A인 버튼 클릭시
+        $("#A").click(function(){
+            var type = $("#type").val();
+
+            //해당 타입 아이디에 해당하는 값을 가져옴
+            var preValue = $("#"+type).val();
+
+            //형변환 후 이전 값에서 1 값 추가
+            $("#"+type).val(parseInt(preValue)+1);
+
+            //다음으로 넘어감
+            next();
+        });
+
+        //B버튼은 점수 증가할 필요가 없음
+        $("#B").click(function(){
+            
+            //다음으로 넘어감
+            next();
+        });
+
+
+
+        //다음 문제로 넘어가는 함수 설정
+        function next(){
+
+            //만약 문제가 끝번호 이후로 넘어가면 - 마지막 문제 이후
+            if(num==13){
+                $(".question").hide();
+                $(".result").show();
+
+                //MBTI를 구하는 최종 로직
+                var mbti = "";
+                
+                //삼항연산자
+                ($("#EI").val() < 2) ? mbti+="I" : mbti+="E";
+                ($("#SN").val() < 2) ? mbti+="N" : mbti+="S";
+                ($("#TF").val() < 2) ? mbti+="F" : mbti+="T";
+                ($("#JP").val() < 2) ? mbti+="P" : mbti+="J";
+                
+                //alert(mbti);
+
+                //
+                $("#img").attr("src",result[mbti]["img"]);
+                $("#animal").html(result[mbti]["animal"]);
+                $("#explain").html(result[mbti]["explain"]);
+
+
+            } else{ //마지막 문제가 아닐 경우
+
+                //문제 번호에 따라 프로그래스 바 증가
+                $(".progress-bar").attr('style','width: calc(100/12*'+num+'%)');
+
+                //문제에 해당하는 id - html 안에 있는 - q 안의 num 번째 "title"로 대체
+                $("#title").html(q[num]["title"]);
+                $("#type").val(q[num]["type"]);
+                $("#A").html(q[num]["A"]);
+                $("#B").html(q[num]["B"]);
+
+                num++;
+            }
+        }
+    </script>
+
 </body>
 </html>

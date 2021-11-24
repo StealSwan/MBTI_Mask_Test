@@ -1,0 +1,28 @@
+article{
+    /* 가로 정렬 */
+    display: flex;
+    /* 세로정렬  - 부모에 해당하는 article을 꽉 채우는 형태로 생성*/
+    flex-direction: column;
+}
+
+
+.container{
+    background-image: url(background-img.gif);
+}
+
+
+.question{
+    display: none;
+}
+
+
+.result{
+    display: none;
+}
+
+
+#img{
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
