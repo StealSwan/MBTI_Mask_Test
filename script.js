@@ -213,7 +213,7 @@ $('.fun-btn').on('click', function(event) {
                 //문제 번호에 따라 프로그래스 바 증가   
                 //$(".progress").attr('style','width: calc(100/12*'+num+'%)');
 
-                $(".progress").animate({width: (100/12*+num+'%')},800);
+                $(".progress").animate({width: (100/12*+num+'%')},400);
 
                 //$(".progress").animate({width:"+=28px"},800);
 
