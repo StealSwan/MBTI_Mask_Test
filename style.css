@@ -1,0 +1,302 @@
+@import url(https://fonts.googleapis.com/css?family=Fjalla+One);
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+
+html {
+  height: 100%;
+}
+
+article{
+    /* 가로 정렬 */
+    display: flex;
+    /* 세로정렬  - 부모에 해당하는 article을 꽉 채우는 형태로 생성*/
+    flex-direction: column;
+
+}
+
+
+/* 전체 */
+.container{
+    background-image: url(mask7.jpg);
+    background-repeat: repeat;
+    margin: 0 auto;
+}
+
+
+.start{
+  width: 100%;
+}
+
+/* 코드펜 */
+.container2 {
+  transform: translate(-50%, 30%);
+  top: 50%;
+  left: 50%;
+  display: block;
+  position: relative;
+  max-width: 300px;
+  margin-top: 5%;
+}
+
+
+h1 {
+  font-family: "Fjalla One", sans-serif;
+  background: linear-gradient(to bottom, #405166 0%, #656f6f 100%);
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 42px;
+  margin: 0;
+  line-height: 32px;
+  letter-spacing: 2px;
+}
+
+.title {
+  transform: translateX(-50%) rotate(-10deg);
+  display: block;
+  float: left;
+  left: 50%;
+  position: relative;
+}
+
+span {
+  font-family: 'Jua', sans-serif;
+  margin-top: 8%;
+  transform: skew(-10deg);
+  display: block;
+  float: left;
+  text-shadow: #533d4a 1px 1px, #533d4a 2px 2px, #533d4a 3px 3px, #533d4a 4px 4px, #533d4a 5px 5px, #533d4a 6px 6px;
+  min-width: 10px;
+  min-height: 10px;
+  position: relative;
+}
+
+.title:nth-child(1) {
+  color: #e7503c;
+}
+.title:nth-child(2) {
+  color: #12d466;
+}
+.title:nth-child(3) {
+  color: #f7c522;
+}
+
+
+
+/* 제목 */
+/* #subject1{
+    font-family: 'Gugi', cursive;
+    color: #ffffff;
+    margin-top: 55%;
+    font-size: 2em;
+    float: left;
+}
+
+
+#subject2{
+    font-family: 'Gugi', cursive;
+    color: #ffffff;
+} */
+
+
+/* 질문 */
+.question{
+    display: none;
+    width: 100%;
+    height: 85%;
+}
+
+
+/* 문제 항목 */
+#title1{
+  font-family: 'Jua', sans-serif;
+  color: rgb(204, 19, 204);
+  font-size: 1.3em;
+}
+
+
+.result{
+    display: none;
+}
+
+
+#img{
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+
+
+/* 버튼 */
+#btns {
+	display: flex;
+	justify-content: center;
+}
+
+/* 버튼 */
+.page {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+}
+
+
+/* add default color for animation start  */
+
+
+/* toggle this class */
+
+.color-bg-start {
+  background-color: salmon;
+}
+
+
+/* toggle class bg-animate-color */
+
+.bg-animate-color {
+  animation: random-bg .5s linear infinite;
+}
+
+
+/* add animation to bg color  */
+
+@keyframes random-bg {
+  from {
+    filter: hue-rotate(0);
+  }
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+.fun-btn {
+  /* change bg color to get different hues    */
+  background-color: rgb(231, 85, 195);
+  color: white;
+  padding: 1.5em 2em;
+  border: none;
+  transition: all .3s ease;
+  border-radius: 5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  outline: none;
+  align-self: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.fun-btn:hover {
+  animation: random-bg .5s linear infinite, grow 1300ms ease infinite;
+}
+
+.start-fun {
+  background-color: #fff !important;
+  /* change color of button text when fun is started   */
+  color: salmon !important;
+}
+
+/* pulsating effect on button */
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.3);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.3);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+
+/* 프로그레스바 */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#loader {
+  width: 550px;
+}
+.percent-count {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+  font-family: 'Raleway', sans-serif;
+  font-size: 2.5rem;
+  color: #8aaaff;
+}
+
+.progress-bar {
+  background: #e6eeff;
+  width: 100%;
+  height: 15px;
+  border-radius: 50px;
+  margin-bottom: 20%;
+  overflow: hidden;
+}
+.progress-bar .progress {
+  background-image: linear-gradient(90deg, #8aaaff, #fa8cff);
+  width: 3px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+
+/* 처음부터 */
+#begin{
+  font-family: 'Jua', sans-serif;
+  color: rgb(204, 19, 204);
+  font-size: 1.3em;
+}
+
+
+
+
+/* 프로그래스바 하트 아이콘
+
+#progress-icon {
+  overflow: visible;
+  z-index: 2;
+  text-align: end;
+  font-size: 2.0rem;
+  text-shadow: 
+  0 0 5px #2196f3,
+  0 0 20px #2196f3,
+  0 0 30px #2196f3,
+  0 0 40px #2196f3,
+  0 0 50px #2196f3;
+animation: icon-animate 5s linear infinite;
+}
+
+@keyframes icon-animate {
+0% {
+  filter: hue-rotate(-5deg);
+}
+
+100% {
+  filter: hue-rotate(10deg);
+}
+}
+
+#progress-icon::before {
+  text-align: end;
+  background-color: transparent;
+  overflow: visible;
+} */
