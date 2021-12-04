@@ -40,9 +40,9 @@
 
         <article class="container2">
             <h1>
-              <span class="title">이시국</span>
-              <span class="title">MBTI 유형별</span>
-              <span class="title">추천 마스크</span>
+              <span class="title titleSpan">이시국</span>
+              <span class="title titleSpan">MBTI 유형별</span>
+              <span class="title titleSpan">추천 마스크</span>
             </h1>
         </article>
 
@@ -73,17 +73,35 @@
         <h2 id="title2" class="text-center">문제</h2>
         <!-- id값에 따라 각 타입에 해당하는 점수 상승  -->
         <input id="type" type="hidden" value="EI">
-        <button id="A" type="button" class="btn btn-primary mt-5">1번</button>
-        <button id="B" type="button" class="btn btn-primary mt-5">2번</button>
+        <button id="A" type="button" class="w-btn w-btn-pink mt-5">1번</button>
+        <button id="B" type="button" class="w-btn w-btn-pink mt-5">2번</button>
 
     </article>
+
+
+    <!-- 로딩창 -->
+    <div class="loading">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+        <div class="shadow"></div>
+        <span>Loading</span>
+    </div>
+
 
 
     <!-- 결과 화면 -->
     <article class="result">
         <img id="img" class="rounded-circle mt-5" src="ex1.png" alt="">
-        <h2 id="animal" class="text-center mt-5">MBTI</h2>
+        <h2 id="mask" class="text-center mt-5">MBTI</h2>
         <h2 id="explain" class="text-center mt-5">마스크 테스트</h2>
+
+        <!-- 결과공유 -->
+        <!-- Go to www.addthis.com/dashboard to customize your tools --> 
+        <div class="share addthis_inline_share_toolbox_5fks"></div>
+            
     </article> 
 
 
@@ -96,5 +114,12 @@
 
      <!-- 스크립트 -->
      <script src="script.js"></script>
+
+
+     <!-- add this 공유 -->
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-61ab25a20efae5f2"></script>
+
+
 </body>
 </html>
